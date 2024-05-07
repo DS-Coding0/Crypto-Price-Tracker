@@ -19,8 +19,8 @@ def get_eur_price():
 
 
 # Initialize previous prices
-previous_prices_dollar = {"BTC": 0, "ETH": 0, "XRP": 0, "SOL": 0, "TRX": 0, "EUR": 0}
-previous_prices_euro = {"BTC": 0, "ETH": 0, "XRP": 0, "SOL": 0, "TRX": 0, "EUR": 0}
+previous_prices_dollar = {"BTC": 0, "ETH": 0, "XRP": 0, "SOL": 0, "EUR": 0}
+previous_prices_euro = {"BTC": 0, "ETH": 0, "XRP": 0, "SOL": 0, "EUR": 0}
 
 while True:
     table = [

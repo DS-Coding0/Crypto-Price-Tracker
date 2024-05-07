@@ -6,7 +6,7 @@ This is a simple Python script that uses the Chainlink API to fetch the prices o
 
 To run this script, you will need to have Python 3.x installed on your system. You can download it from the official [Python website](https://www.python.org/downloads/).
 
-Once you have Python installed, you can run the script by navigating to the project directory in your terminal and running the command `python crypto_price_tracker_v01.py`.
+Once you have Python installed, you can run the script by navigating to the project directory in your terminal and running the command `python Crypto_Price_Tracker_v01.py`.
 
 ## Usage
 
