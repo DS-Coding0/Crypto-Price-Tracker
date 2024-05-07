@@ -136,6 +136,9 @@ while True:
         # Update previous prices
         previous_prices_euro[currency] = current_price
 
+    # init for windows colorama
+    init()
+
     # Create table to display
     print(tabulate(table, headers, tablefmt="github"))
     print("\n\n")
