@@ -17,10 +17,17 @@ def get_eur_price():
     price = round(float(price) / 100000000, 2)
     return price
 
+# Request for polygon-mainnet
+def get_prices_polygon(feed_id_polygon, divisor, xlong):
+    url = f"https://data.chain.link/api/query?query=FEED_DATA_QUERY&variables=%7B%22schemaName%22%3A%22polygon-mainnet%22%2C%22contractAddress%22%3A%22{feed_id_polygon}%22%7D"
+    price = requests.get(url).json()["data"]["chainData"]["nodes"][0]["inputs"]["answer"]
+    price = round(float(price) / divisor, xlong)
+    return price
+
 
 # Initialize previous prices
-previous_prices_dollar = {"BTC": 0, "ETH": 0, "XRP": 0, "SOL": 0, "EUR": 0}
-previous_prices_euro = {"BTC": 0, "ETH": 0, "XRP": 0, "SOL": 0, "EUR": 0}
+previous_prices_dollar = {"BTC": 0, "ETH": 0, "XRP": 0, "SOL": 0, "ADA": 0, "DOGE": 0, "LINK": 0, "EUR": 0}
+previous_prices_euro = {"BTC": 0, "ETH": 0, "XRP": 0, "SOL": 0, "ADA": 0, "DOGE": 0, "LINK": 0, "EUR": 0}
 
 while True:
     table = [
@@ -92,9 +99,60 @@ while True:
                 2,
             ),
         ],
+        [
+            "ADA",
+            get_prices_polygon(
+                "0xde89d2acf279d1478ff0557318b44a614846f737",
+                100000000,
+                8,
+            ),
+            round(
+                get_prices_polygon(
+                    "0xde89d2acf279d1478ff0557318b44a614846f737",
+                    100000000,
+                    8,
+                )
+                / get_eur_price(),
+                8,
+            )
+        ],
+        [
+            "DOGE",
+            get_prices_polygon(
+                "0x8badf35cf94251dc813b5d5c0ac3f9b2de9e5358",
+                100000000,
+                8,
+            ),
+            round(
+                get_prices_polygon(
+                    "0x8badf35cf94251dc813b5d5c0ac3f9b2de9e5358",
+                    100000000,
+                    8,
+                )
+                / get_eur_price(),
+                8,
+            )
+        ],
+        [
+            "LINK",
+            get_prices_polygon(
+                "0xdbbf66711c9a0dff777797d82dda7009b6c846dd",
+                100000000,
+                7,
+            ),
+            round(
+                get_prices_polygon(
+                    "0xdbbf66711c9a0dff777797d82dda7009b6c846dd",
+                    100000000,
+                    7,
+                )
+                / get_eur_price(),
+                7,
+            )
+        ],
         ["EUR", get_eur_price(), 1],
     ]
-    headers = ["Currencies", " in $".rjust(10), "in €".rjust(12)]
+    headers = ["Currencies", " in $".rjust(12), "in €".rjust(12)]
 
     # Compare current prices with previous prices
     for i, row in enumerate(table):
