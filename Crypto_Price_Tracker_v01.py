@@ -104,16 +104,16 @@ while True:
             get_prices_polygon(
                 "0xde89d2acf279d1478ff0557318b44a614846f737",
                 100000000,
-                8,
+                4,
             ),
             round(
                 get_prices_polygon(
                     "0xde89d2acf279d1478ff0557318b44a614846f737",
                     100000000,
-                    8,
+                    4,
                 )
                 / get_eur_price(),
-                8,
+                4,
             )
         ],
         [
@@ -121,16 +121,16 @@ while True:
             get_prices_polygon(
                 "0x8badf35cf94251dc813b5d5c0ac3f9b2de9e5358",
                 100000000,
-                8,
+                4,
             ),
             round(
                 get_prices_polygon(
                     "0x8badf35cf94251dc813b5d5c0ac3f9b2de9e5358",
                     100000000,
-                    8,
+                    4,
                 )
                 / get_eur_price(),
-                8,
+                4,
             )
         ],
         [
@@ -138,16 +138,16 @@ while True:
             get_prices_polygon(
                 "0xdbbf66711c9a0dff777797d82dda7009b6c846dd",
                 100000000,
-                7,
+                4,
             ),
             round(
                 get_prices_polygon(
                     "0xdbbf66711c9a0dff777797d82dda7009b6c846dd",
                     100000000,
-                    7,
+                    4,
                 )
                 / get_eur_price(),
-                7,
+                4,
             )
         ],
         ["EUR", get_eur_price(), 1],
