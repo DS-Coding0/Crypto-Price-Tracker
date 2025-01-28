@@ -3,31 +3,24 @@ import time
 from colorama import Fore, init
 from tabulate import tabulate
 
-# Request for Crypto Price Feeds
+
 def get_price(feed_id, divisor, xlong):
     url = f"https://data.chain.link/api/query-timescale?query=LIVE_STREAM_REPORTS_QUERY&variables=%7B%22feedId%22%3A%22{feed_id}%22%7D"
     price = requests.get(url).json()["data"]["liveStreamReports"]["nodes"][0]["price"]
     price = round(float(price) / divisor, xlong)
     return price
 
-# Request for Dollar/Euro
+
 def get_eur_price():
     url = "https://data.chain.link/api/query?query=FEED_DATA_QUERY&variables=%7B%22schemaName%22%3A%22ethereum-mainnet%22%2C%22contractAddress%22%3A%220x02f878a94a1ae1b15705acd65b5519a46fe3517e%22%7D"
     price = requests.get(url).json()["data"]["chainData"]["nodes"][0]["inputs"]["answer"]
     price = round(float(price) / 100000000, 2)
     return price
 
-# Request for polygon-mainnet
-def get_prices_polygon(feed_id_polygon, divisor, xlong):
-    url = f"https://data.chain.link/api/query?query=FEED_DATA_QUERY&variables=%7B%22schemaName%22%3A%22polygon-mainnet%22%2C%22contractAddress%22%3A%22{feed_id_polygon}%22%7D"
-    price = requests.get(url).json()["data"]["chainData"]["nodes"][0]["inputs"]["answer"]
-    price = round(float(price) / divisor, xlong)
-    return price
-
 
 # Initialize previous prices
-previous_prices_dollar = {"BTC": 0, "ETH": 0, "XRP": 0, "SOL": 0, "ADA": 0, "DOGE": 0, "LINK": 0, "EUR": 0}
-previous_prices_euro = {"BTC": 0, "ETH": 0, "XRP": 0, "SOL": 0, "ADA": 0, "DOGE": 0, "LINK": 0, "EUR": 0}
+previous_prices_dollar = {"BTC": 0, "ETH": 0, "XRP": 0, "SOL": 0, "TRX": 0, "EUR": 0}
+previous_prices_euro = {"BTC": 0, "ETH": 0, "XRP": 0, "SOL": 0, "TRX": 0, "EUR": 0}
 
 while True:
     table = [
@@ -99,60 +92,9 @@ while True:
                 2,
             ),
         ],
-        [
-            "ADA",
-            get_prices_polygon(
-                "0xde89d2acf279d1478ff0557318b44a614846f737",
-                100000000,
-                4,
-            ),
-            round(
-                get_prices_polygon(
-                    "0xde89d2acf279d1478ff0557318b44a614846f737",
-                    100000000,
-                    4,
-                )
-                / get_eur_price(),
-                4,
-            )
-        ],
-        [
-            "DOGE",
-            get_prices_polygon(
-                "0x8badf35cf94251dc813b5d5c0ac3f9b2de9e5358",
-                100000000,
-                4,
-            ),
-            round(
-                get_prices_polygon(
-                    "0x8badf35cf94251dc813b5d5c0ac3f9b2de9e5358",
-                    100000000,
-                    4,
-                )
-                / get_eur_price(),
-                4,
-            )
-        ],
-        [
-            "LINK",
-            get_prices_polygon(
-                "0xdbbf66711c9a0dff777797d82dda7009b6c846dd",
-                100000000,
-                4,
-            ),
-            round(
-                get_prices_polygon(
-                    "0xdbbf66711c9a0dff777797d82dda7009b6c846dd",
-                    100000000,
-                    4,
-                )
-                / get_eur_price(),
-                4,
-            )
-        ],
         ["EUR", get_eur_price(), 1],
     ]
-    headers = ["Currencies", " in $".rjust(12), "in €".rjust(12)]
+    headers = ["Currencies", " in $".rjust(10), "in €".rjust(12)]
 
     # Compare current prices with previous prices
     for i, row in enumerate(table):
@@ -194,12 +136,7 @@ while True:
         # Update previous prices
         previous_prices_euro[currency] = current_price
 
-    # init for windows colorama
     init()
-
-    # Create table to display
     print(tabulate(table, headers, tablefmt="github"))
     print("\n\n")
-    
-    # Time.sleep to the next price update
     time.sleep(20)
